@@ -45,9 +45,9 @@ def launch_instance():
 			raise
 	
 	reservation = conn.run_instances(ec2_amis,
-									key_name=ec2_key,
-									instance_type=ec2_instancetype, 
-									security_groups=[ec2_group])
+					key_name=ec2_key,
+					instance_type=ec2_instancetype, 
+					security_groups=[ec2_group])
 			
 	instance = reservation.instances[0]
 	conn.create_tags([instance.id], {"Name":ec2_tag})
@@ -73,7 +73,7 @@ def stop_instance(instance_id):
 
 def terminate_instance(instance_id):
 	"""
-	terminate EC2 instance
+	terminate EC2 instance with given ID
 	"""
 	print "... terminating EC2 instance ..."
 	conn = boto.connect_ec2(ec2_key,ec2_secret)
@@ -83,5 +83,5 @@ def terminate_instance(instance_id):
 if __name__ == "__main__":
 	instance = launch_instance()
 	print " Sleep 200s before stopping the instance ... "
-
+	time.sleep(200)
 	stop_instance(instance.id)
